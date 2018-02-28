@@ -1,11 +1,11 @@
 var kitties = [
-  {
+  uno = {
     id: 'ky-0',
     name: 'Kitty 1',
     thumbnail: 'landing-kitty01.svg',
     price: 150
   },
-  {
+  dos = {
     id: 'ky-1',
     name: 'Kitty 2',
     thumbnail: 'landing-kitty03.svg',
@@ -48,40 +48,64 @@ var kitties = [
     price: 250
   }
 ];
-
 var order = [];
-
-function render() {
-  for (var i = 0; i < kitties.length; i++) {
-    var kitty = kitties[i];
-    $('.js-gallery-list').append(`
-    <li class="kitty ${kitty.id}">
-      <h3 class="title">${kitty.name}</h3>
-      <img src="https://www.cryptokitties.co/images/${kitty.thumbnail}"/>
-      <p>$${kitty.price}</p>
-    </li>
-    `);
-  }
-}
-
-function initListeners() {
-  $('.js-gallery-list').on('click', '.kitty', function () {
-    var id = $(this).attr('class').split(' ')[1];
-    console.log(id);
-  });
-  $('.js-btn-cart').on('click', function () {
-    $('.js-btn-close').removeClass('hidden');
-    $('.js-shopping-cart').removeClass('hidden');
-    $('.js-btn-cart').addClass('hidden');
-  });
-  $('.js-btn-close').on('click', function () {
-    $('.js-btn-cart').removeClass('hidden');
-    $('.js-shopping-cart').addClass('hidden');
-    $('.js-btn-close').addClass('hidden');
+let total = [];
+const render = () => {
+  kitties.map((kitty) => {
+  $('.js-gallery-list').append(`
+<li class="kitty" id="${kitty.id}">
+  <h3 class="title">${kitty.name}</h3>
+  <img src="https://www.cryptokitties.co/images/${kitty.thumbnail}"/>
+  <p>${kitty.price}</p>
+</li>
+`)
   });
 }
+const initListeners = () => {
+  $('.js-gallery-list').on('click', '.kitty', getIdcat);
+  $('.js-btn-cart').on('click', hiddenShopping);
+  $('.js-btn-close').on('click', productListClosse);
+}
+const getIdcat = (e) => {
+  var idCat = $(e.currentTarget).attr("id");
+  addProduct(e, idCat);
+};
+const hiddenShopping = () => {
+  $('.js-btn-close').removeClass('hidden');
+  $('.js-shopping-cart').removeClass('hidden');
+  $('.js-btn-cart').addClass('hidden');
+}
+const productListClosse = () => {
+  $('.js-btn-cart').removeClass('hidden');
+  $('.js-shopping-cart').addClass('hidden');
+  $('.js-btn-close').addClass('hidden');
+}
+const addProduct = (e, idCat) => {
+  const nameCat = e.currentTarget.childNodes[1].textContent;
+  const price = e.currentTarget.childNodes[5].textContent;
+  //console.log(nameCat, price, idCat);
+  $("#product").append(`
+<li>
+  <b>${nameCat} </b><span> $ ${price} MXN</span>
+</li>
+`)
 
-$(function () {
+  total.push(price);
+  console.log(total)
+  totalCost();
+
+
+}
+
+const totalCost= ()=>{
+  total.map((price)=>{
+
+  
+    console.log(x)
+  })
+}
+
+$(() => {
   render();
   initListeners();
 });
